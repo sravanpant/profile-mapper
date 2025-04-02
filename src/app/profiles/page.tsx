@@ -10,6 +10,7 @@ import { useProfiles } from '@/hooks/useProfile';
 import { Profile } from '@/types/profile';
 import { Button } from '@/components/ui/button';
 import { MapPin } from 'lucide-react';
+import { Navbar } from '@/components/layout/Navbar';
 
 export default function ProfilesPage() {
   const router = useRouter();
@@ -64,6 +65,7 @@ export default function ProfilesPage() {
 
   return (
     <div className="container mx-auto p-4 space-y-6">
+      <Navbar />
       {/* Search Filter */}
       <SearchFilter 
         onSearch={(term) => handleSearch(term)}

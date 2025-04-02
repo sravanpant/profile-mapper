@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { Profile as PrismaProfile, Address as PrismaAddress } from '@prisma/client'
 
-export interface Address {
+export interface Address extends PrismaAddress {
   street: string;
   city: string;
   country: string;
@@ -46,3 +47,9 @@ export const ProfileSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date()
 });
+
+export type Address = PrismaAddress
+
+export interface Profile extends PrismaProfile {
+  address?: Address | null;
+}

@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { ProfileMap } from '@/components/ProfileMap';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
-// import { Button } from '@/components/ui/button';
 import { Profile } from '@/types/profile';
 import { reverseGeocode } from '@/lib/geocoding';
 

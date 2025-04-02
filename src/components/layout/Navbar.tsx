@@ -63,7 +63,7 @@ export function Navbar() {
           className="text-2xl font-bold flex items-center text-foreground"
         >
           <MapPin size={30}  className="mr-2" />
-          <span className="hidden md:visible">Profile Mapper</span>
+          <span className="hidden md:flex">Profile Mapper</span>
         </Link>
 
         {/* Desktop Navigation */}

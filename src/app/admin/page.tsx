@@ -15,10 +15,17 @@ import {
   AlertDialogDescription, 
   AlertDialogFooter, 
   AlertDialogHeader, 
-  AlertDialogTitle, 
-//   AlertDialogTrigger 
+  AlertDialogTitle 
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogDescription 
+} from "@/components/ui/dialog";
+import { Plus } from "lucide-react";
 
 export default function AdminPage() {
   const { 
@@ -31,6 +38,7 @@ export default function AdminPage() {
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [profileToDelete, setProfileToDelete] = useState<string | null>(null);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   // Handle profile submission
   const handleProfileSubmit = async (profileData: Partial<Profile>) => {
@@ -65,8 +73,9 @@ export default function AdminPage() {
       // Refresh the profiles list
       await mutate();
 
-      // Reset selected profile
+      // Reset states
       setSelectedProfile(null);
+      setIsProfileModalOpen(false);
     } catch (error) {
       // Show error toast
       toast.error(
@@ -111,6 +120,12 @@ export default function AdminPage() {
     }
   };
 
+  // Open modal for adding/editing profile
+  const openProfileModal = (profile?: Profile) => {
+    setSelectedProfile(profile || null);
+    setIsProfileModalOpen(true);
+  };
+
   // Render loading state
   if (loading) {
     return (
@@ -142,27 +157,47 @@ export default function AdminPage() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Admin Dashboard</h1>
         <Button 
-          onClick={() => setSelectedProfile(null)}
-          disabled={!selectedProfile}
+          onClick={() => openProfileModal()}
+          className="flex items-center"
         >
+          <Plus className="mr-2 h-4 w-4" />
           Add New Profile
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <AdminProfileForm
-          key={selectedProfile?.id || 'new'}
-          profile={selectedProfile || undefined}
-          onSubmit={handleProfileSubmit}
-          isSubmitting={isSubmitting}
-        />
+      {/* Data Table */}
+      <DataTable
+        profiles={profiles}
+        onEdit={(profile) => openProfileModal(profile)}
+        onDelete={(profileId) => setProfileToDelete(profileId)}
+      />
 
-        <DataTable
-          profiles={profiles}
-          onEdit={setSelectedProfile}
-          onDelete={(profileId) => setProfileToDelete(profileId)}
-        />
-      </div>
+      {/* Profile Modal */}
+      <Dialog 
+        open={isProfileModalOpen} 
+        onOpenChange={setIsProfileModalOpen}
+      >
+        <DialogContent className="sm:max-w-[625px]">
+          <DialogHeader>
+            <DialogTitle>
+              {selectedProfile ? 'Edit Profile' : 'Add New Profile'}
+            </DialogTitle>
+            <DialogDescription>
+              {selectedProfile 
+                ? 'Update the details of an existing profile' 
+                : 'Create a new profile with comprehensive information'
+              }
+            </DialogDescription>
+          </DialogHeader>
+          
+          <AdminProfileForm
+            key={selectedProfile?.id || 'new'}
+            profile={selectedProfile || undefined}
+            onSubmit={handleProfileSubmit}
+            isSubmitting={isSubmitting}
+          />
+        </DialogContent>
+      </Dialog>
 
       {/* Confirmation Dialog for Deletion */}
       <AlertDialog 

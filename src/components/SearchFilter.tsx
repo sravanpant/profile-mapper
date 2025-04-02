@@ -34,7 +34,7 @@ export function SearchFilter({
   };
 
   return (
-    <div className="flex space-x-4">
+    <div className="mt-16 flex space-x-4">
       <div className="flex-grow">
         <Input 
           type="text"
