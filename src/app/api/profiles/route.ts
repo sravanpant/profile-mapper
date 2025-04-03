@@ -1,62 +1,38 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { z } from 'zod'
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { mapPrismaProfileToProfile } from "@/types/profile";
 
-// Validation Schema
-const profileSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  description: z.string().optional(),
-  imageUrl: z.string().url().optional(),
-  address: z.object({
-    street: z.string().min(1, "Street is required"),
-    city: z.string().min(1, "City is required"),
-    country: z.string().min(1, "Country is required"),
-    postalCode: z.string().optional()
-  }).optional(),
-  latitude: z.number().optional(),
-  longitude: z.number().optional()
-})
-
-// GET all profiles
 export async function GET() {
   try {
-    const profiles = await prisma.profile.findMany({
+    // Ensure prisma is initialized
+    if (!prisma) {
+      throw new Error("Prisma client not initialized");
+    }
+
+    // Fetch profiles with their addresses
+    const prismaProfiles = await prisma.profile.findMany({
       include: {
-        address: true
+        address: true,
       },
       orderBy: {
-        createdAt: 'desc'
-      }
-    })
-    return NextResponse.json(profiles)
-  } catch (error) {
-    console.error('Error fetching profiles:', error)
-    return NextResponse.json({ error: 'Failed to fetch profiles' }, { status: 500 })
-  }
-}
-
-// CREATE new profile
-export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json()
-    const validatedData = profileSchema.parse(body)
-
-    const newProfile = await prisma.profile.create({
-      data: {
-        ...validatedData,
-        address: validatedData.address 
-          ? { create: validatedData.address } 
-          : undefined
+        createdAt: "desc",
       },
-      include: {
-        address: true
-      }
-    })
+    });
 
-    return NextResponse.json(newProfile, { status: 201 })
+    // Map Prisma profiles to application profiles
+    const profiles = prismaProfiles.map(mapPrismaProfileToProfile);
+
+    return NextResponse.json(profiles);
   } catch (error) {
-    console.error('Error creating profile:', error)
-    return NextResponse.json({ error: 'Failed to create profile' }, { status: 400 })
+    console.error("Error fetching profiles:", error);
+
+    // More detailed error response
+    return NextResponse.json(
+      {
+        message: "Failed to fetch profiles",
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 }
+    );
   }
 }

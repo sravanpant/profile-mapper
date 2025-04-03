@@ -17,27 +17,22 @@ model Profile {
   id          String    @id @default(cuid())
   name        String
   email       String    @unique
-  description String?
-  imageUrl    String?
-  
-  // Address Information
-  address     Address?
-  
-  // Contact Information
-  phone       String?
-  website     String?
-  
-  // Geographical Coordinates
-  latitude    Float?
-  longitude   Float?
-  
-  // Metadata
+  description String?   // Maps to string | null
+  imageUrl    String?   // Maps to string | null
+
+  address     Address?  // Relation
+
+  phone       String?   // Maps to string | null
+  website     String?   // Maps to string | null
+
+  latitude    Float?    // Maps to number | null
+  longitude   Float?    // Maps to number | null
+
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  
-  // Optional Relationships or Additional Fields
-  tags        String[]
-  isActive    Boolean   @default(true)
+
+  tags        String[]  // Maps to string[]
+  isActive    Boolean   @default(true) // Maps to boolean
 }
 
 model Address {
@@ -45,8 +40,8 @@ model Address {
   street    String
   city      String
   country   String
-  postalCode String?
-  
+  postalCode String? // Maps to string | null
+
   profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
   profileId String   @unique
 }

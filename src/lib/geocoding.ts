@@ -9,19 +9,31 @@ export async function geocodeAddress(address: string) {
       }
     })
 
-    const result = response.data.results[0]
-    if (!result) {
-      throw new Error('No results found')
+    // Handle no results scenario
+    if (!response.data.results || response.data.results.length === 0) {
+      return { 
+        latitude: null, 
+        longitude: null,
+        formattedAddress: null
+      }
     }
 
+    const result = response.data.results[0]
     const { lat, lng } = result.geometry.location
+
     return { 
       latitude: lat, 
       longitude: lng,
       formattedAddress: result.formatted_address
     }
   } catch (error) {
-    console.error('Geocoding error', error)
-    throw error
+    console.error('Geocoding error', error);
+    
+    // Return null values instead of throwing
+    return { 
+      latitude: null, 
+      longitude: null,
+      formattedAddress: null
+    }
   }
 }
