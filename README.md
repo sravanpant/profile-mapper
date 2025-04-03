@@ -157,5 +157,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 Your Name - sravan.pant5@gmail.com
 
 Project Link: [https://github.com/sravanpant/profile-mapper](https://github.com/sravanpant/profile-mapper)
-```
-
