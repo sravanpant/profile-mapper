@@ -1,36 +1,161 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Profile Mapper
 
-## Getting Started
+## Overview
 
-First, run the development server:
+Profile Mapper is an innovative web application that allows users to explore and visualize professional profiles on an interactive geographical map. The platform provides a seamless experience for discovering, searching, and understanding the global distribution of professionals.
 
+## 🌟 Features
+
+### Core Functionality
+- Interactive profile browsing
+- Geographical visualization of profiles
+- Detailed profile information
+- Advanced search and filtering
+- Responsive design
+
+### Technical Highlights
+- Next.js 15 with App Router
+- TypeScript
+- Prisma ORM
+- PostgreSQL Database
+- Tailwind CSS
+- Shadcn UI
+- Google Maps Integration
+- Zod Validation
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18+)
+- npm or yarn
+- PostgreSQL Database
+- Google Maps API Key
+
+### Installation
+
+1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/profile-mapper.git
+cd profile-mapper
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables
+Create a `.env.local` file with the following:
+```
+DATABASE_URL="your_postgresql_connection_string"
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="your_google_maps_api_key"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Initialize Prisma
+```bash
+npx prisma generate
+npx prisma migrate dev
+```
 
-## Learn More
+5. Run the development server
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 📂 Project Structure
+```
+src/
+├── app/
+│   ├── api/
+│   ├── admin/
+│   ├── map/
+│   └── profiles/
+├── components/
+├── hooks/
+├── lib/
+├── styles/
+└── types/
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠 Technologies Used
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Frontend
+- Next.js 15
+- React
+- TypeScript
+- Tailwind CSS
+- Shadcn UI
+- Framer Motion
 
-## Deploy on Vercel
+### Backend
+- Prisma ORM
+- PostgreSQL
+- Zod Validation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Mapping
+- Google Maps API
+- Geocoding Services
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### State Management
+- SWR (Stale-While-Revalidate)
+
+## 🔐 Authentication (Planned)
+- Role-based access control
+- User registration
+- Profile management
+
+## 🗺️ Geocoding
+- Automatic address to coordinates conversion
+- Fallback mechanisms for invalid addresses
+
+## 📱 Responsive Design
+- Mobile-friendly
+- Adaptive layouts
+- Cross-device compatibility
+
+## 🧪 Testing
+- Unit Tests
+- Integration Tests
+- End-to-End Tests (Planned)
+
+## 🚢 Deployment
+Easily deployable on:
+- Vercel
+- Netlify
+- Heroku
+- DigitalOcean
+
+## 🤝 Contributing
+
+### How to Contribute
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Development Workflow
+- Follow TypeScript best practices
+- Maintain consistent code style
+- Write comprehensive tests
+- Update documentation
+
+## 📋 Roadmap
+- [ ] Implement user authentication
+- [ ] Add advanced filtering
+- [ ] Create user profiles
+- [ ] Enhance mapping features
+- [ ] Implement social sharing
+
+## 🐛 Reporting Issues
+Please use the GitHub Issues section to report bugs or suggest features.
+
+## 📄 License
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## 📞 Contact
+Your Name - sravan.pant5@gmail.com
+
+Project Link: [https://github.com/sravanpant/profile-mapper](https://github.com/sravanpant/profile-mapper)
+```
+
